@@ -8,10 +8,10 @@ const userAgents: Record<string, RegExp> = {
 };
 
 test("runs on the runtime its project names", ({ task }) => {
-  const project = task.file.projectName ?? "";
+  const expected = userAgents[task.file.projectName ?? ""];
   const { navigator } = globalThis as { navigator?: { userAgent?: string } };
-  expect(Object.keys(userAgents)).toContain(project);
-  expect(navigator?.userAgent).toMatch(userAgents[project] ?? /^$/);
+  expect(expected, `unknown project ${task.file.projectName}`).toBeDefined();
+  expect(navigator?.userAgent).toMatch(expected as RegExp);
 });
 
 test("the package names itself", () => {

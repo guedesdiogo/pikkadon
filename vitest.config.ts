@@ -22,7 +22,8 @@ export default defineConfig({
       provider: "istanbul",
       include: ["src/**/*.ts"],
       exclude: ["src/**/*.d.ts"],
-      reporter: ["text", "json-summary"],
+      // Every file listed, fully covered ones included, so the report shows what was measured.
+      reporter: [["text", { skipFull: false }], "json-summary"],
       thresholds: { statements: 80, branches: 80, functions: 80, lines: 80 },
     },
     // The first test of each workerd file waits for the runtime to start, which takes seconds on a

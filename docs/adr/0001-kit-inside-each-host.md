@@ -48,7 +48,7 @@ That is: maybe just code we can use inside Hermes, Kelpie, Claude Code, Zikaron 
 - **A fix reaches a host only when the host moves to the new version.** Hosts pin a version of the release tarball (Q11, Story 1.5), so a release is a supply-chain event for every host: releases ship only from CI, on a tag, with an attestation.
 - **The same rules run everywhere, with the same tests.** The core is tested on workerd and on Node; the cases for redaction are shared with the Python plugin's tests as JSON, so the two can't drift apart.
 - **Each host deploys and operates its own copy,** with its own owner page and its own audit destination.
-- **Identity on the VPS changes shape.** Node exposes no peer credentials on a Unix socket, so the `SO_PEERCRED` check gives way to one systemd socket unit per agent, guarded by the file's mode (Q15).
+- **Identity on the VPS changes shape.** The Python vault reads the caller's uid with `SO_PEERCRED`, which Node's `net` module doesn't offer. So the daemon identifies the agent by one systemd socket unit per agent, guarded by the file's mode, instead (Q15). Story 1.6 confirms that the daemon can listen on the descriptors systemd hands it.
 - **On the agent's own machine the kit is no boundary against the agent.** On a workstation the agent runs as the same user and already holds the `wrangler` and `gh` logins. The kit guarantees that the value the owner types never passes through the model; it doesn't stop the agent from writing a value of its own.
 
 ## Alternatives considered
