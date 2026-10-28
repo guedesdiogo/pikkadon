@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    // The core runs on workerd, Node and Bun: no DOM, Node or Workers types (#1).
+    "types": []
+  },
+  "include": ["src/**/*.ts"]
+}

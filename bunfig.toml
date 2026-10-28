@@ -1,0 +1,3 @@
+# Isolated install: the package sees only the dependencies it declares.
+[install]
+linker = "isolated"
